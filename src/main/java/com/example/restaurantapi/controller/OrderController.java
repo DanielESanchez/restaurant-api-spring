@@ -22,7 +22,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/{orderNumber}")
-    String findId(@PathVariable Long orderNumber) {
+    String findId(@PathVariable long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
         return (order == null) ? "404" : order.get_id();
     }
@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @PutMapping("/order/{orderNumber}")
-    Order replaceOrder(@RequestBody Order newOrder, @PathVariable Long orderNumber) {
+    Order replaceOrder(@RequestBody Order newOrder, @PathVariable long orderNumber) {
         Order oldOrder = repository.findItemByProductId(orderNumber);
         if(oldOrder == null) return null;
         String _id = oldOrder.get_id();
@@ -41,7 +41,7 @@ public class OrderController {
                 .map(order -> {
                     order.setOrderNumber(newOrder.getOrderNumber());
                     order.setOrderList(newOrder.getOrderList());
-                    order.setCompleted(newOrder.getIsCompleted());
+                    order.setCompleted(newOrder.isCompleted());
                     order.setTable(newOrder.getTable());
                     order.setWaiterAssigned(newOrder.getWaiterAssigned());
                     return repository.save(order);
@@ -50,7 +50,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/order/{orderNumber}")
-    String deleteOrder(@PathVariable Long orderNumber) {
+    String deleteOrder(@PathVariable long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
         if(order == null) return "Not Found";
         String _id = order.get_id();

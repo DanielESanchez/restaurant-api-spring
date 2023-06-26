@@ -12,15 +12,11 @@ public class Table {
 
     @Getter
     @Setter
-    private int tableNumber;
+    private long tableNumber;
 
     @Getter
     @Setter
     private boolean isEmpty;
-
-    public int getTableNumber() {
-        return tableNumber;
-    }
 
     public boolean getIsEmpty() {
         return isEmpty;

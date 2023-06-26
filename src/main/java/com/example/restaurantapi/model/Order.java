@@ -15,7 +15,7 @@ public class Order {
 
     @Getter
     @Setter
-    private Long orderNumber;
+    private long orderNumber;
 
     @Getter
     @Setter
@@ -27,17 +27,10 @@ public class Order {
 
     @Getter
     @Setter
-    private boolean isCompleted = false;
+    private boolean isCompleted;
 
     @Getter
     @Setter
     private Table table;
-
-    public Order(Waiter waiterAssigned, Table table){
-        this.orderList = new ArrayList<>();
-        this.waiterAssigned = waiterAssigned;
-        this.table = table;
-    }
-
 
 }

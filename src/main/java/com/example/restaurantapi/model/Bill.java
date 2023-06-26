@@ -4,65 +4,63 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
-public class Person {
+import java.util.Date;
+import java.util.List;
+
+public class Bill {
+
     @Id
     @Getter
     @Setter
     private String _id;
 
-    @Getter
     @Setter
-    private String idPerson;
+    @Getter
+    private String idBill;
 
     @Getter
     @Setter
-    private int index;
+    private Date dateBill;
 
     @Getter
     @Setter
-    private int age;
+    private float subtotal = 0;
 
     @Getter
     @Setter
-    private String eyeColor;
+    private int taxesPercentage;
 
     @Getter
     @Setter
-    private String name;
+    private float taxesTotal;
 
     @Getter
     @Setter
-    private String lastName;
+    private int discount;
 
     @Getter
     @Setter
-    private String gender;
+    private float discountTotal;
 
     @Getter
     @Setter
-    private String email;
+    private float total;
 
     @Getter
     @Setter
-    private String phone;
+    private List<OrderItem> items;
 
     @Getter
     @Setter
-    private String address;
+    private Table table;
 
     @Getter
     @Setter
-    private String about;
+    private Customer customer;
 
     @Getter
     @Setter
-    private String registered;
+    private Cashier cashier;
 
-    @Getter
-    @Setter
-    public boolean isEmployee;
-
-    public String getFullName() {
-        return name + " " + lastName;
-    }
 }
+
