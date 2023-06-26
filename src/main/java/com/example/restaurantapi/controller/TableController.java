@@ -2,10 +2,13 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Table;
 import com.example.restaurantapi.repository.TableRepository;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@EnableMongoRepositories
 public class TableController {
 
     private final TableRepository repository;
