@@ -1,21 +1,27 @@
 package com.example.restaurantapi.model;
 
-public abstract class Employee extends Person {
+import lombok.Getter;
+import lombok.Setter;
+
+public class Employee extends Person {
+    @Getter
+    @Setter
+    private String idEmployee;
+    @Getter
+    @Setter
     private String job;
+    @Getter
+    @Setter
     private String  hireDate;
+    @Getter
+    @Setter
     private boolean isWorking;
+    @Getter
+    @Setter
     private float salary;
+
     public Employee(){
         super();
     }
 
-    public abstract String getJob();
-
-    public abstract String getHireDate();
-
-    public abstract boolean getIsWorking();
-
-    public abstract float getSalary();
-
-    public abstract void setWorking(boolean working);
 }
