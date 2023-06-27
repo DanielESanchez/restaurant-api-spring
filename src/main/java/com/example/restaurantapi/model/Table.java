@@ -3,6 +3,7 @@ package com.example.restaurantapi.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Table {
     @Id
@@ -12,17 +13,11 @@ public class Table {
 
     @Getter
     @Setter
-    private long tableNumber;
+    @Indexed(unique = true)
+    private Long tableNumber;
 
     @Getter
     @Setter
-    private boolean isEmpty;
+    private Boolean isEmpty;
 
-    public boolean getIsEmpty() {
-        return isEmpty;
-    }
-
-    public void changeStatusTable() {
-        isEmpty = !isEmpty;
-    }
 }

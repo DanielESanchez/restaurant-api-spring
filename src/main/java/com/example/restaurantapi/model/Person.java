@@ -3,6 +3,7 @@ package com.example.restaurantapi.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Person {
     @Id
@@ -12,15 +13,16 @@ public class Person {
 
     @Getter
     @Setter
+    @Indexed(unique = true)
     private String idPerson;
 
     @Getter
     @Setter
-    private int index;
+    private Integer index;
 
     @Getter
     @Setter
-    private int age;
+    private Integer age;
 
     @Getter
     @Setter
@@ -40,6 +42,7 @@ public class Person {
 
     @Getter
     @Setter
+    @Indexed(unique = true)
     private String email;
 
     @Getter
@@ -60,7 +63,7 @@ public class Person {
 
     @Getter
     @Setter
-    public boolean isEmployee;
+    public Boolean isEmployee;
 
     public String getFullName() {
         return name + " " + lastName;

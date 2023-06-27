@@ -3,6 +3,7 @@ package com.example.restaurantapi.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ public class Order {
 
     @Getter
     @Setter
-    private long orderNumber;
+    @Indexed(unique = true)
+    private Long orderNumber;
 
     @Getter
     @Setter
@@ -27,7 +29,7 @@ public class Order {
 
     @Getter
     @Setter
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     @Getter
     @Setter

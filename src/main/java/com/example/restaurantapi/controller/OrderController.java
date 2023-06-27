@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @PutMapping("/order/{orderNumber}")
-    Order replaceOrder(@RequestBody Order newOrder, @PathVariable long orderNumber) {
+    Order replaceOrder(@RequestBody Order newOrder, @PathVariable Long orderNumber) {
         Order oldOrder = repository.findItemByProductId(orderNumber);
         if(oldOrder == null) return null;
         String _id = oldOrder.get_id();
@@ -41,7 +41,7 @@ public class OrderController {
                 .map(order -> {
                     order.setOrderNumber(newOrder.getOrderNumber());
                     order.setOrderList(newOrder.getOrderList());
-                    order.setCompleted(newOrder.isCompleted());
+                    order.setIsCompleted(newOrder.getIsCompleted());
                     order.setTable(newOrder.getTable());
                     order.setWaiterAssigned(newOrder.getWaiterAssigned());
                     return repository.save(order);

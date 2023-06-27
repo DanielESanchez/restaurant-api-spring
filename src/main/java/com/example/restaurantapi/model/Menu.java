@@ -3,9 +3,12 @@ package com.example.restaurantapi.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.validation.annotation.Validated;
 
 @Document("menu")
+@Validated
 public class Menu {
 
     @Id
@@ -15,15 +18,17 @@ public class Menu {
 
     @Getter
     @Setter
+    @Indexed(unique = true)
     private String productId;
 
     @Getter
     @Setter
+    @Indexed(unique = true)
     private String name;
 
     @Getter
     @Setter
-    private float price;
+    private Float price;
 
     @Getter
     @Setter

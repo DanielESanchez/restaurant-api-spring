@@ -11,7 +11,7 @@ public class OrderItem {
 
     @Getter
     @Setter
-    private boolean isBeingCooked;
+    private Boolean isBeingCooked;
 
     @Getter
     @Setter
@@ -19,11 +19,11 @@ public class OrderItem {
 
     @Getter
     @Setter
-    private boolean isCompleted =false;
+    private Boolean isCompleted =false;
 
     @Getter
     @Setter
-    private int quantity;
+    private Integer quantity;
 
     public OrderItem(Chef chefAssigned, Menu menuItem){
         super();

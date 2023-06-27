@@ -23,7 +23,7 @@ public class TableController {
     }
 
     @GetMapping("/table/{tableNumber}")
-    String findId(@PathVariable String tableNumber) {
+    String findId(@PathVariable Long tableNumber) {
         Table table = repository.findByTableNumber(tableNumber);
         return (table == null) ? "404" : table.get_id();
     }
@@ -34,21 +34,21 @@ public class TableController {
     }
 
     @PutMapping("/table/{tableNumber}")
-    Table replaceTable(@RequestBody Table newTable, @PathVariable String tableNumber) {
+    Table replaceTable(@RequestBody Table newTable, @PathVariable Long tableNumber) {
         Table oldTable = repository.findByTableNumber(tableNumber);
         if(oldTable == null) return null;
         String _id = oldTable.get_id();
         return repository.findById(_id)
                 .map(table -> {
                     table.setTableNumber(newTable.getTableNumber());
-                    table.setEmpty(newTable.getIsEmpty());
+                    table.setIsEmpty(newTable.getIsEmpty());
                     return repository.save(table);
                 })
                 .orElseGet(() -> repository.save(newTable));
     }
 
     @DeleteMapping("/table/{tableNumber}")
-    String deleteTable(@PathVariable String tableNumber) {
+    String deleteTable(@PathVariable Long tableNumber) {
         Table table = repository.findByTableNumber(tableNumber);
         if(table == null) return "Not Found";
         String _id = table.get_id();

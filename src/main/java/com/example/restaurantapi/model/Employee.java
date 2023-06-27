@@ -2,10 +2,12 @@ package com.example.restaurantapi.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Employee extends Person {
     @Getter
     @Setter
+    @Indexed(unique = true)
     private String idEmployee;
     @Getter
     @Setter
@@ -15,10 +17,10 @@ public class Employee extends Person {
     private String  hireDate;
     @Getter
     @Setter
-    private boolean isWorking;
+    private Boolean isWorking;
     @Getter
     @Setter
-    private float salary;
+    private Float salary;
 
     public Employee(){
         super();

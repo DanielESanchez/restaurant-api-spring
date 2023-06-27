@@ -3,6 +3,7 @@ package com.example.restaurantapi.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Bill {
 
     @Setter
     @Getter
+    @Indexed(unique = true)
     private String idBill;
 
     @Getter
@@ -24,27 +26,27 @@ public class Bill {
 
     @Getter
     @Setter
-    private float subtotal = 0;
+    private Float subtotal;
 
     @Getter
     @Setter
-    private int taxesPercentage;
+    private Integer taxesPercentage;
 
     @Getter
     @Setter
-    private float taxesTotal;
+    private Float taxesTotal;
 
     @Getter
     @Setter
-    private int discount;
+    private Integer discount;
 
     @Getter
     @Setter
-    private float discountTotal;
+    private Float discountTotal;
 
     @Getter
     @Setter
-    private float total;
+    private Float total;
 
     @Getter
     @Setter

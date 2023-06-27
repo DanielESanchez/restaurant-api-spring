@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface TableRepository extends MongoRepository<Table, String> {
 
     @Query(value = "{tableNumber:'?0'}", fields="{'_id' : 1, tableNumber: 1}")
-    Table findByTableNumber(String tableNumber);
+    Table findByTableNumber(Long tableNumber);
 
 }

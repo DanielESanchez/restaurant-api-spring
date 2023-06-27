@@ -10,5 +10,5 @@ public class Customer extends Person {
 
     @Getter
     @Setter
-    private boolean isSenior;
+    private Boolean isSenior;
 }
