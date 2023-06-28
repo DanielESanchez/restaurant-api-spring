@@ -64,5 +64,9 @@ public class Bill {
     @Setter
     private Cashier cashier;
 
+    public String toString(){
+        return "";
+    }
+
 }
 

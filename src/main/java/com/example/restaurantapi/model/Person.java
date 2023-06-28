@@ -18,15 +18,7 @@ public class Person {
 
     @Getter
     @Setter
-    private Integer index;
-
-    @Getter
-    @Setter
     private Integer age;
-
-    @Getter
-    @Setter
-    private String eyeColor;
 
     @Getter
     @Setter
@@ -35,10 +27,6 @@ public class Person {
     @Getter
     @Setter
     private String lastName;
-
-    @Getter
-    @Setter
-    private String gender;
 
     @Getter
     @Setter
@@ -52,10 +40,6 @@ public class Person {
     @Getter
     @Setter
     private String address;
-
-    @Getter
-    @Setter
-    private String about;
 
     @Getter
     @Setter

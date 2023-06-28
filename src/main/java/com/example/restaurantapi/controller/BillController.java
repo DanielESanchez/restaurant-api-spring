@@ -2,8 +2,12 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Bill;
 import com.example.restaurantapi.repository.BillRepository;
+import com.example.restaurantapi.services.AttributeNullCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -11,13 +15,20 @@ import java.util.List;
 @EnableMongoRepositories
 public class BillController {
     private final BillRepository repository;
+    private final AttributeNullCheckerService attributeNullCheckerService;
 
-    BillController(BillRepository repository) {
+    BillController(BillRepository repository, AttributeNullCheckerService attributeNullCheckerService) {
         this.repository = repository;
+        this.attributeNullCheckerService = attributeNullCheckerService;
     }
 
     @GetMapping("/bills")
     List<Bill> allBill() {
+        List<Bill> billList = repository.findAll();
+        if (billList.size() < 1) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There are no bills to show.");
+        }
         return repository.findAll();
     }
 
@@ -28,12 +39,25 @@ public class BillController {
     }
 
     @PostMapping("/bill")
-    Bill newBill(@RequestBody Bill bill) {
-        return repository.save(bill);
+    ResponseEntity newBill(@RequestBody Bill bill) {
+        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(bill);
+        if(messageResponseFromNullTest != null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, messageResponseFromNullTest);
+        }
+        repository.save(bill);
+        return new ResponseEntity<>(
+                bill.getIdBill() + " was successfully saved.",
+                HttpStatus.OK);
     }
 
     @PutMapping("/bill/{idBill}")
-    Bill replaceBill(@RequestBody Bill newBill, @PathVariable String idBill) {
+    ResponseEntity replaceBill(@RequestBody Bill newBill, @PathVariable String idBill) {
+        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(newBill);
+        if(messageResponseFromNullTest != null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, messageResponseFromNullTest);
+        }
         Bill oldBill = repository.findBillByIdBill(idBill);
         if(oldBill == null) return null;
         String _id = oldBill.get_id();
@@ -51,18 +75,31 @@ public class BillController {
                     bill.setDiscountTotal(newBill.getDiscountTotal());
                     bill.setTotal(newBill.getTotal());
                     bill.setItems(newBill.getItems());
-                    return repository.save(bill);
+                    repository.save(bill);
+                    return new ResponseEntity<>(
+                            bill.getIdBill() + " was successfully updated.",
+                            HttpStatus.OK);
                 })
-                .orElseGet(() -> repository.save(newBill));
+                .orElseGet(() -> {
+                    repository.save(newBill);
+                    return new ResponseEntity<>(
+                            newBill.getIdBill() + " was saved.",
+                            HttpStatus.OK);
+                });
     }
 
     @DeleteMapping("/bill/{idBill}")
-    String deleteBill(@PathVariable String idBill) {
+    ResponseEntity deleteBill(@PathVariable String idBill) {
         Bill bill = repository.findBillByIdBill(idBill);
-        if(bill == null) return "Not Found";
+        if(bill == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Menu Item Not Found");
+        }
         String _id = bill.get_id();
         repository.deleteById(_id);
-        return "Completed";
+        return new ResponseEntity<>(
+                bill.getIdBill() + " was successfully deleted.",
+                HttpStatus.OK);
     }
 
 }

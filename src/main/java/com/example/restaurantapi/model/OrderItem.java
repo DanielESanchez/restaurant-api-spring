@@ -7,7 +7,7 @@ public class OrderItem {
 
     @Getter
     @Setter
-    private Menu menuItem;
+    private MenuItemRestaurant menuItem;
 
     @Getter
     @Setter
@@ -25,7 +25,7 @@ public class OrderItem {
     @Setter
     private Integer quantity;
 
-    public OrderItem(Chef chefAssigned, Menu menuItem){
+    public OrderItem(Chef chefAssigned, MenuItemRestaurant menuItem){
         super();
         this.menuItem = menuItem;
         this.chefAssigned = chefAssigned;

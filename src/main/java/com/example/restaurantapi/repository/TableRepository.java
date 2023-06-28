@@ -1,6 +1,5 @@
 package com.example.restaurantapi.repository;
 
-import com.example.restaurantapi.model.Menu;
 import com.example.restaurantapi.model.Table;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

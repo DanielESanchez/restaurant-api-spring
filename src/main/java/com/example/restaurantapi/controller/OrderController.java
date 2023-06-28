@@ -2,8 +2,12 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Order;
 import com.example.restaurantapi.repository.OrderRepository;
+import com.example.restaurantapi.services.AttributeNullCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -11,29 +15,46 @@ import java.util.List;
 @EnableMongoRepositories
 public class OrderController {
     private final OrderRepository repository;
+    private final AttributeNullCheckerService attributeNullCheckerService;
 
-    OrderController(OrderRepository repository) {
+
+    OrderController(AttributeNullCheckerService attributeNullCheckerService,
+                    OrderRepository repository) {
+        this.attributeNullCheckerService = attributeNullCheckerService;
         this.repository = repository;
     }
 
     @GetMapping("/orders")
     List<Order> allOrder() {
-        return repository.findAll();
+        List<Order> orderList = repository.findAll();
+        if (orderList.size() < 1) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There are no orders to show.");
+        }
+        return orderList;
     }
 
     @GetMapping("/order/{orderNumber}")
-    String findId(@PathVariable long orderNumber) {
+    String findId(@PathVariable Long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
         return (order == null) ? "404" : order.get_id();
     }
 
     @PostMapping("/order")
-    Order newOrder(@RequestBody Order order) {
-        return repository.save(order);
+    ResponseEntity newOrder(@RequestBody Order order) {
+        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(order);
+        if(messageResponseFromNullTest != null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, messageResponseFromNullTest);
+        }
+        repository.save(order);
+        return new ResponseEntity<>(
+                order.getOrderNumber() + " was successfully saved.",
+                HttpStatus.OK);
     }
 
     @PutMapping("/order/{orderNumber}")
-    Order replaceOrder(@RequestBody Order newOrder, @PathVariable Long orderNumber) {
+    ResponseEntity replaceOrder(@RequestBody Order newOrder, @PathVariable Long orderNumber) {
         Order oldOrder = repository.findItemByProductId(orderNumber);
         if(oldOrder == null) return null;
         String _id = oldOrder.get_id();
@@ -44,17 +65,30 @@ public class OrderController {
                     order.setIsCompleted(newOrder.getIsCompleted());
                     order.setTable(newOrder.getTable());
                     order.setWaiterAssigned(newOrder.getWaiterAssigned());
-                    return repository.save(order);
+                    repository.save(order);
+                    return new ResponseEntity<>(
+                            order.getOrderNumber() + " was successfully updated.",
+                            HttpStatus.OK);
                 })
-                .orElseGet(() -> repository.save(newOrder));
+                .orElseGet(() -> {
+                    repository.save(newOrder);
+                    return new ResponseEntity<>(
+                            newOrder.getOrderNumber() + " was successfully saved.",
+                            HttpStatus.OK);
+                });
     }
 
     @DeleteMapping("/order/{orderNumber}")
-    String deleteOrder(@PathVariable long orderNumber) {
+    ResponseEntity deleteOrder(@PathVariable Long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
-        if(order == null) return "Not Found";
+        if(order == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Order Not Found");
+        }
         String _id = order.get_id();
         repository.deleteById(_id);
-        return "Completed";
+        return new ResponseEntity<>(
+                order.getOrderNumber() + " was successfully deleted.",
+                HttpStatus.OK);
     }
 }
