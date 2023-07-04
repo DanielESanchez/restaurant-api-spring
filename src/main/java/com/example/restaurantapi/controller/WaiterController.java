@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Waiter;
 import com.example.restaurantapi.repository.WaiterRepository;
-import com.example.restaurantapi.services.AttributeNullCheckerService;
+import com.example.restaurantapi.services.implementation.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import java.util.List;
 public class WaiterController {
 
     private final WaiterRepository repository;
-    private final AttributeNullCheckerService attributeNullCheckerService;
+    private final AttributeCheckerService attributeCheckerService;
 
-    WaiterController(AttributeNullCheckerService attributeNullCheckerService,
+    WaiterController(AttributeCheckerService attributeCheckerService,
                      WaiterRepository repository) {
-        this.attributeNullCheckerService = attributeNullCheckerService;
+        this.attributeCheckerService = attributeCheckerService;
         this.repository = repository;
     }
 
@@ -42,7 +42,7 @@ public class WaiterController {
 
     @PostMapping("/waiter")
     Waiter newWaiter(@RequestBody Waiter waiter) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(waiter);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(waiter);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
@@ -52,7 +52,7 @@ public class WaiterController {
 
     @PutMapping("/waiter/{idEmployee}")
     Waiter replaceWaiter(@RequestBody Waiter newWaiter, @PathVariable String idEmployee) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(newWaiter);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newWaiter);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);

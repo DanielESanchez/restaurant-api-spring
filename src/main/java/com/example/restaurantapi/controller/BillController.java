@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Bill;
 import com.example.restaurantapi.repository.BillRepository;
-import com.example.restaurantapi.services.AttributeNullCheckerService;
+import com.example.restaurantapi.services.implementation.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.List;
 @EnableMongoRepositories
 public class BillController {
     private final BillRepository repository;
-    private final AttributeNullCheckerService attributeNullCheckerService;
+    private final AttributeCheckerService attributeCheckerService;
 
-    BillController(BillRepository repository, AttributeNullCheckerService attributeNullCheckerService) {
+    BillController(BillRepository repository, AttributeCheckerService attributeCheckerService) {
         this.repository = repository;
-        this.attributeNullCheckerService = attributeNullCheckerService;
+        this.attributeCheckerService = attributeCheckerService;
     }
 
     @GetMapping("/bills")
@@ -40,7 +40,7 @@ public class BillController {
 
     @PostMapping("/bill")
     ResponseEntity newBill(@RequestBody Bill bill) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(bill);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(bill);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
@@ -53,7 +53,7 @@ public class BillController {
 
     @PutMapping("/bill/{idBill}")
     ResponseEntity replaceBill(@RequestBody Bill newBill, @PathVariable String idBill) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(newBill);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newBill);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);

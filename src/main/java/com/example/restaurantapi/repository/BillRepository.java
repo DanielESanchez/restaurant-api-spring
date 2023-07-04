@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BillRepository extends MongoRepository<Bill, String> {
 
-    @Query(value = "{idBill:'?0'}", fields="{'_id' : 1, idBill: 1}")
+    @Query(value = "{idBill:'?0'}")
     Bill findBillByIdBill(String productId);
 }

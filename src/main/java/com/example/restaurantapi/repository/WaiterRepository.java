@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WaiterRepository extends MongoRepository<Waiter, String> {
 
-    @Query(value = "{idEmployee:'?0'}", fields="{'_id' : 1, idEmployee: 1}")
+    @Query(value = "{idEmployee:'?0'}")
     Waiter findByIdEmployee(String productId);
 }

@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Cashier;
 import com.example.restaurantapi.repository.CashierRepository;
-import com.example.restaurantapi.services.AttributeNullCheckerService;
+import com.example.restaurantapi.services.implementation.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import java.util.List;
 public class CashierController {
 
     private final CashierRepository repository;
-    private final AttributeNullCheckerService attributeNullCheckerService;
+    private final AttributeCheckerService attributeCheckerService;
 
-    CashierController(AttributeNullCheckerService attributeNullCheckerService,
+    CashierController(AttributeCheckerService attributeCheckerService,
                       CashierRepository repository) {
-        this.attributeNullCheckerService = attributeNullCheckerService;
+        this.attributeCheckerService = attributeCheckerService;
         this.repository = repository;
     }
 
@@ -42,7 +42,7 @@ public class CashierController {
 
     @PostMapping("/cashier")
     ResponseEntity newCashier(@RequestBody Cashier cashier) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(cashier);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(cashier);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
@@ -54,7 +54,7 @@ public class CashierController {
 
     @PutMapping("/cashier/{idEmployee}")
     ResponseEntity replaceCashier(@RequestBody Cashier newCashier, @PathVariable String idEmployee) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(newCashier);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newCashier);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);

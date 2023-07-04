@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Order;
 import com.example.restaurantapi.repository.OrderRepository;
-import com.example.restaurantapi.services.AttributeNullCheckerService;
+import com.example.restaurantapi.services.implementation.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import java.util.List;
 @EnableMongoRepositories
 public class OrderController {
     private final OrderRepository repository;
-    private final AttributeNullCheckerService attributeNullCheckerService;
+    private final AttributeCheckerService attributeCheckerService;
 
 
-    OrderController(AttributeNullCheckerService attributeNullCheckerService,
+    OrderController(AttributeCheckerService attributeCheckerService,
                     OrderRepository repository) {
-        this.attributeNullCheckerService = attributeNullCheckerService;
+        this.attributeCheckerService = attributeCheckerService;
         this.repository = repository;
     }
 
@@ -42,7 +42,7 @@ public class OrderController {
 
     @PostMapping("/order")
     ResponseEntity newOrder(@RequestBody Order order) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(order);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(order);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);

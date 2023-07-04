@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Chef;
 import com.example.restaurantapi.repository.ChefRepository;
-import com.example.restaurantapi.services.AttributeNullCheckerService;
+import com.example.restaurantapi.services.implementation.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import java.util.List;
 public class ChefController {
 
     private final ChefRepository repository;
-    private final AttributeNullCheckerService attributeNullCheckerService;
+    private final AttributeCheckerService attributeCheckerService;
 
-    ChefController(AttributeNullCheckerService attributeNullCheckerService,
+    ChefController(AttributeCheckerService attributeCheckerService,
                    ChefRepository repository) {
-        this.attributeNullCheckerService = attributeNullCheckerService;
+        this.attributeCheckerService = attributeCheckerService;
         this.repository = repository;
     }
 
@@ -42,7 +42,7 @@ public class ChefController {
 
     @PostMapping("/chef")
     ResponseEntity newChef(@RequestBody Chef chef) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(chef);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(chef);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
@@ -55,7 +55,7 @@ public class ChefController {
 
     @PutMapping("/chef/{idEmployee}")
     ResponseEntity replaceChef(@RequestBody Chef newChef, @PathVariable String idEmployee) {
-        String messageResponseFromNullTest = attributeNullCheckerService.checkNullsInObject(newChef);
+        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newChef);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);

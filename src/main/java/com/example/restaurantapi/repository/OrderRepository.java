@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends MongoRepository<Order, String> {
 
-    @Query(value = "{orderNumber:'?0'}", fields="{'_id' : 1, orderNumber: 1}")
+    @Query(value = "{orderNumber:'?0'}")
     Order findItemByProductId(Long orderNumber);
 
 }

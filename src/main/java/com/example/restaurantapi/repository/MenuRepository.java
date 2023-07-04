@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MenuRepository extends MongoRepository<MenuItemRestaurant, String> {
 
-    @Query(value = "{productId:'?0'}", fields="{'_id' : 1, productId: 1}")
+    @Query(value = "{productId:'?0'}")
     MenuItemRestaurant findItemByProductId(String productId);
 
 

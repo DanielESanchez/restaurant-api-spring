@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChefRepository extends MongoRepository<Chef, String> {
 
-    @Query(value = "{idEmployee:'?0'}", fields="{'_id' : 1, idEmployee: 1}")
+    @Query(value = "{idEmployee:'?0'}")
     Chef findByIdEmployee(String idEmployee);
 
 }
