@@ -29,49 +29,12 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /*@PostMapping("/user/chef")
-    ResponseEntity<JwtAuthenticationResponse> saveChef(@RequestBody User user) {
-        Set<UserRole> roles = new HashSet<>();
-        roles.add(getUserRoleService.getUserRole());
-        roles.add(getUserRoleService.getChefRole());
-        user.setUserRoles(roles);
-        user.setCreatedAt(new Date().getTime());
-        user.setAccountNonExpired(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(authenticationService.signup(user));
-    }*/
-
-    @PostMapping("/user/waiter")
-    ResponseEntity<JwtAuthenticationResponse> saveWaiter(@RequestBody User user) {
-        Set<UserRole> roles = new HashSet<>();
-        roles.add(getUserRoleService.getUserRole());
-        roles.add(getUserRoleService.getWaiterRole());
-        user.setUserRoles(roles);
-        user.setCreatedAt(new Date().getTime());
-        user.setAccountNonExpired(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(authenticationService.signup(user));
-    }
-
-    @PostMapping("/user/cashier")
-    ResponseEntity<JwtAuthenticationResponse> saveCashier(@RequestBody User user) {
-        Set<UserRole> roles = new HashSet<>();
-        roles.add(getUserRoleService.getUserRole());
-        roles.add(getUserRoleService.getCashierRole());
-        user.setUserRoles(roles);
-        user.setCreatedAt(new Date().getTime());
-        user.setAccountNonExpired(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(authenticationService.signup(user));
-    }
-
-    @PostMapping("/user/login")
+    @PostMapping("/user/new")
     ResponseEntity<JwtAuthenticationResponse> saveUser(@RequestBody User user) {
         Set<UserRole> roles = new HashSet<>();
         roles.add(getUserRoleService.getUserRole());
         user.setUserRoles(roles);
         user.setCreatedAt(new Date().getTime());
-        user.setAccountNonExpired(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(authenticationService.signup(user));
     }

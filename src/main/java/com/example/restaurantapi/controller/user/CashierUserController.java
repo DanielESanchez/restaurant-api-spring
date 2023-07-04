@@ -3,31 +3,31 @@ package com.example.restaurantapi.controller.user;
 import com.example.restaurantapi.dao.request.ChangePasswordRequest;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.model.EmployeeUser;
+import com.example.restaurantapi.services.user.implementation.CashierUserService;
 import com.example.restaurantapi.services.user.implementation.ChangeDataUserService;
-import com.example.restaurantapi.services.user.implementation.ChefUserService;
+
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @EnableMongoRepositories
-public class ChefUserController {
-
+public class CashierUserController {
     private final ChangeDataUserService changeDataUserService;
-    private final ChefUserService chefUserService;
+    private final CashierUserService cashierUserService;
 
-    ChefUserController(ChangeDataUserService changeDataUserService, ChefUserService chefUserService){
+    public CashierUserController(ChangeDataUserService changeDataUserService, CashierUserService cashierUserService) {
         this.changeDataUserService = changeDataUserService;
-        this.chefUserService = chefUserService;
+        this.cashierUserService = cashierUserService;
     }
 
-    @PostMapping("/chef/user/new")
-    ResponseEntity<JwtAuthenticationResponse> saveChef(@RequestBody EmployeeUser employeeUser) {
-        return ResponseEntity.ok(chefUserService.saveNewChefUser(employeeUser));
+    @PostMapping("/cashier/user/new")
+    ResponseEntity<JwtAuthenticationResponse> saveCashier(@RequestBody EmployeeUser employeeUser) {
+        return ResponseEntity.ok(cashierUserService.saveNewCashierUser(employeeUser));
     }
 
-    @PutMapping("/chef/user/password")
-    ResponseEntity<String> changePasswordChef(@RequestBody ChangePasswordRequest changePasswordRequest, @RequestHeader("Authorization") String header) {
+    @PutMapping("/cashier/user/password")
+    ResponseEntity<String> changePasswordCasgier(@RequestBody ChangePasswordRequest changePasswordRequest, @RequestHeader("Authorization") String header) {
         return ResponseEntity.ok(changeDataUserService.changePassword(changePasswordRequest, header));
     }
 }

@@ -49,6 +49,13 @@ public class User implements UserDetails {
     @Setter
     private boolean enabled;
 
+    User(){
+        this.enabled = true;
+        this.accountNonExpired = true;
+        this.credentialsNonExpired = true;
+        this.accountNonLocked =  true;
+    }
+
     @Override
     public String getPassword() {
         return this.password;
