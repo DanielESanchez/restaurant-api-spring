@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Cashier;
 import com.example.restaurantapi.repository.CashierRepository;
-import com.example.restaurantapi.services.implementation.AttributeCheckerService;
+import com.example.restaurantapi.services.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
