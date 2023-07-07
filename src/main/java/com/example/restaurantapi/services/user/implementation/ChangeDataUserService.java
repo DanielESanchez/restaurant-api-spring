@@ -66,7 +66,7 @@ public class ChangeDataUserService implements IChangeDataUserService {
     }
 
     @Override
-    public String SetNonExpiredAccount(String username) {
+    public String setNonExpiredAccount(String username) {
         User user = userRepository.findUserByUsername(username);
         if (user == null) notFoundUser();
         user.setCredentialsNonExpired(true);

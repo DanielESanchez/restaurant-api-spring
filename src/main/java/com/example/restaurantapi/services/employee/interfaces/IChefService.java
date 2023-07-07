@@ -4,7 +4,12 @@ import com.example.restaurantapi.model.Chef;
 
 import java.util.List;
 
-public interface IChefController {
+public interface IChefService {
 
     List<Chef> getAllChefs();
+    List<Chef> getAvailableChefs();
+    Chef findChefByIdEmployee(String idEmployee);
+    String saveChef(Chef chef);
+    String updateChef(Chef newChef);
+    String deleteChef(String idEmployee);
 }

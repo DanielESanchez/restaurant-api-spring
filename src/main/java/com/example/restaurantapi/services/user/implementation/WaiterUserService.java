@@ -3,7 +3,7 @@ package com.example.restaurantapi.services.user.implementation;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.model.EmployeeUser;
 import com.example.restaurantapi.model.UserRole;
-import com.example.restaurantapi.services.implementation.CheckEmployeeService;
+import com.example.restaurantapi.services.employee.implementation.EmployeeService;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.interfaces.IWaiterUserService;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,12 @@ import java.util.Set;
 
 @Service
 public class WaiterUserService implements IWaiterUserService {
-    private final CheckEmployeeService checkEmployeeService;
+    private final EmployeeService checkEmployeeService;
     private final GetUserRoleService getUserRoleService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
 
-    public WaiterUserService(CheckEmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
+    public WaiterUserService(EmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
         this.checkEmployeeService = checkEmployeeService;
         this.getUserRoleService = getUserRoleService;
         this.passwordEncoder = passwordEncoder;
@@ -44,7 +44,7 @@ public class WaiterUserService implements IWaiterUserService {
         roles.add(getUserRoleService.getUserRole());
         roles.add(getUserRoleService.getWaiterRole());
         employeeUser.setUserRoles(roles);
-        employeeUser.setCreatedAt(new Date().getTime());
+        employeeUser.setCreatedAt(new Date().toString());
         employeeUser.setPassword(passwordEncoder.encode(employeeUser.getPassword()));
         return authenticationService.signup(employeeUser);
     }

@@ -28,9 +28,41 @@ import java.security.SecureRandom;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    public static final String[] GUEST_ENDPOINTS_WHITELIST = {
-            "/menus",
-            "/user/login"
+    public static final String[] USER_ENDPOINTS_WHITELIST = {
+            "/order/get/**",
+            "/order/update/**",
+            "/order/new/**",
+            "/user/get/**"
+    };
+    public static final String[] CHEF_ENDPOINTS_WHITELIST = {
+            "/waiter/user/password/**"
+    };
+    public static final String[] WAITER_ENDPOINTS_WHITELIST = {
+            "/waiter/user/password/**",
+            "/table/update/**"
+    };
+    public static final String[] CASHIER_ENDPOINTS_WHITELIST = {
+            "/bill/get/**",
+            "/bill/new/**",
+            "/cashier/user/password"
+    };
+
+    public static final String[] ADMIN_ENDPOINTS_WHITELIST = {
+            "/chef/**",
+            "/chefs/**",
+            "/cashier/**",
+            "/cashiers/**",
+            "/waiter/**",
+            "/waiters/**",
+            "/role/**",
+            "/admin/**",
+            "/bill/**",
+            "/bills/**",
+            "/table/**",
+            "/menu/**",
+            "/order/**",
+            "/orders/**",
+            "/file/**"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -39,7 +71,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(GUEST_ENDPOINTS_WHITELIST).permitAll()
+                        .requestMatchers(USER_ENDPOINTS_WHITELIST).hasRole("USER")
+                        .requestMatchers(ADMIN_ENDPOINTS_WHITELIST).hasRole("ADMIN")
+                        .requestMatchers(CASHIER_ENDPOINTS_WHITELIST).hasRole("CASHIER")
+                        .requestMatchers(WAITER_ENDPOINTS_WHITELIST).hasRole("WAITER")
+                        .requestMatchers(CHEF_ENDPOINTS_WHITELIST).hasRole("CHEF")
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
@@ -80,5 +116,6 @@ public class SecurityConfiguration {
     public UserDetailsService userDetailsService() {
         return userService.userDetailsService();
     }
+
 
 }

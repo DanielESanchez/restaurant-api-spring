@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import com.example.restaurantapi.services.implementation.AttributeCheckerService;
+import com.example.restaurantapi.services.AttributeCheckerService;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
 public class MenuController {
@@ -32,7 +33,7 @@ public class MenuController {
         return menuList;
     }
 
-    @GetMapping("/menu/{productId}")
+    @GetMapping("/menu/get/{productId}")
     String findId(@PathVariable String productId) {
         MenuItemRestaurant menu = repository.findItemByProductId(productId);
         if (menu == null) {
@@ -42,7 +43,7 @@ public class MenuController {
         return menu.get_id();
     }
 
-    @PostMapping("/menu")
+    @PostMapping("/menu/new")
     ResponseEntity newMenu(@RequestBody MenuItemRestaurant menu) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(menu);
         if(messageResponseFromNullTest != null){
@@ -55,17 +56,17 @@ public class MenuController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("/menu/{productId}")
-    ResponseEntity replaceMenu(@RequestBody MenuItemRestaurant newMenu, @PathVariable String productId) {
+    @PutMapping("/menu/update/{productId}")
+    ResponseEntity replaceMenu(@RequestBody MenuItemRestaurant newMenu) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newMenu);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
-        MenuItemRestaurant oldMenu = repository.findItemByProductId(productId);
+        MenuItemRestaurant oldMenu = repository.findItemByProductId(newMenu.getProductId());
         if(oldMenu == null) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Menu Item " + productId + " was not found");
+                    HttpStatus.NOT_FOUND, "Menu Item " + newMenu.getProductId() + " was not found");
         }
         String _id = oldMenu.get_id();
         return repository.findById(_id)
@@ -89,7 +90,7 @@ public class MenuController {
                 });
     }
 
-    @DeleteMapping("/menu/{productId}")
+    @DeleteMapping("/menu/delete/{productId}")
     ResponseEntity deleteMenu(@PathVariable String productId) {
         MenuItemRestaurant menu = repository.findItemByProductId(productId);
         if(menu == null) {

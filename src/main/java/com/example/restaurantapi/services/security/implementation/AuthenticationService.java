@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
@@ -22,7 +24,8 @@ public class AuthenticationService implements IAuthenticationService {
     public JwtAuthenticationResponse signup(User user) {
         userRepository.save(user);
         String jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        Date expiration = jwtService.extractExpiration(jwt);
+        return JwtAuthenticationResponse.builder().token(jwt).expiration(expiration).build();
     }
 
     @Override
@@ -36,7 +39,8 @@ public class AuthenticationService implements IAuthenticationService {
     public JwtAuthenticationResponse signupAdmin(User admin) {
         userRepository.save(admin);
         String jwt = jwtService.generateToken(admin);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        Date expiration = jwtService.extractExpiration(jwt);
+        return JwtAuthenticationResponse.builder().token(jwt).expiration(expiration).build();
     }
 
     @Override
@@ -45,6 +49,7 @@ public class AuthenticationService implements IAuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         User user = userRepository.findUserByUsername(request.getUsername());
         String jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        Date expiration = jwtService.extractExpiration(jwt);
+        return JwtAuthenticationResponse.builder().token(jwt).expiration(expiration).build();
     }
 }

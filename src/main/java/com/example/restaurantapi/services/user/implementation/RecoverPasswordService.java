@@ -4,7 +4,7 @@ import com.example.restaurantapi.model.EmailDetails;
 import com.example.restaurantapi.model.User;
 import com.example.restaurantapi.repository.UserRepository;
 import com.example.restaurantapi.services.email.implementation.EmailService;
-import com.example.restaurantapi.services.user.interfaces.IRecoverPassword;
+import com.example.restaurantapi.services.user.interfaces.IRecoverPasswordService;
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class RecoverPassword implements IRecoverPassword {
+public class RecoverPasswordService implements IRecoverPasswordService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public RecoverPassword(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public RecoverPasswordService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -28,7 +28,6 @@ public class RecoverPassword implements IRecoverPassword {
 
     @Override
     public String recoverPassword(EmailDetails emailDetails) {
-        System.out.println("Empezando todo");
         String username = emailDetails.getRecipient();
         User user = userRepository.findUserByUsername(username);
         if(user == null){

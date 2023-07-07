@@ -1,4 +1,4 @@
-package com.example.restaurantapi.services.user.interfaces;
+package com.example.restaurantapi.services.email.interfaces;
 
 import com.example.restaurantapi.model.EmailDetails;
 

@@ -12,6 +12,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +44,14 @@ public class JwtService implements IJwtService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        Date expirationDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(expirationDate);
+        calendar.add(Calendar.DATE, 1);
+        expirationDate = calendar.getTime();
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(expirationDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -53,7 +59,8 @@ public class JwtService implements IJwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
+    @Override
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 

@@ -6,16 +6,16 @@ import com.example.restaurantapi.model.Waiter;
 import com.example.restaurantapi.repository.CashierRepository;
 import com.example.restaurantapi.repository.ChefRepository;
 import com.example.restaurantapi.repository.WaiterRepository;
-import com.example.restaurantapi.services.employee.interfaces.ICheckEmployeeService;
+import com.example.restaurantapi.services.employee.interfaces.IEmployeeService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CheckEmployeeService implements ICheckEmployeeService {
-    private ChefRepository chefRepository;
-    private CashierRepository cashierRepository;
-    private WaiterRepository waiterRepository;
+public class EmployeeService implements IEmployeeService {
+    private final ChefRepository chefRepository;
+    private final CashierRepository cashierRepository;
+    private final WaiterRepository waiterRepository;
 
-    CheckEmployeeService(ChefRepository chefRepository, CashierRepository cashierRepository, WaiterRepository waiterRepository){
+    EmployeeService(ChefRepository chefRepository, CashierRepository cashierRepository, WaiterRepository waiterRepository){
         this.chefRepository = chefRepository;
         this.cashierRepository = cashierRepository;
         this.waiterRepository = waiterRepository;
@@ -31,4 +31,5 @@ public class CheckEmployeeService implements ICheckEmployeeService {
         if(waiter != null) return  "waiter";
         return null;
     }
+
 }

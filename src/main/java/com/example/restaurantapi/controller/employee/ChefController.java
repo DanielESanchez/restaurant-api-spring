@@ -1,7 +1,7 @@
-package com.example.restaurantapi.controller;
+package com.example.restaurantapi.controller.employee;
 
+import com.example.restaurantapi.dao.response.ResponseOk;
 import com.example.restaurantapi.model.Chef;
-import com.example.restaurantapi.repository.ChefRepository;
 import com.example.restaurantapi.services.employee.implementation.ChefService;
 
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
 public class ChefController {
 
-    private final ChefRepository repository;
     private final ChefService chefService;
 
-    ChefController(ChefRepository repository, ChefService chefService) {
-        this.repository = repository;
+    ChefController(ChefService chefService) {
         this.chefService = chefService;
     }
 
@@ -38,17 +37,29 @@ public class ChefController {
     }
 
     @PostMapping("/chef/new")
-    ResponseEntity<String> newChef(@RequestBody Chef chef) {
-        return ResponseEntity.ok(chefService.saveChef(chef));
+    ResponseEntity<ResponseOk> newChef(@RequestBody Chef chef) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( chefService.saveChef(chef) )
+                        .build());
     }
 
     @PutMapping("/chef/update")
-    ResponseEntity<String> updateChef(@RequestBody Chef newChef) {
-        return ResponseEntity.ok(chefService.updateChef(newChef));
+    ResponseEntity<ResponseOk> updateChef(@RequestBody Chef newChef) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( chefService.updateChef(newChef) )
+                        .build());
     }
 
     @DeleteMapping("/chef/{idEmployee}")
-    ResponseEntity<String> deleteChef(@PathVariable String idEmployee) {
-        return ResponseEntity.ok(chefService.deleteChef(idEmployee));
+    ResponseEntity<ResponseOk> deleteChef(@PathVariable String idEmployee) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( chefService.deleteChef(idEmployee) )
+                        .build());
     }
 }

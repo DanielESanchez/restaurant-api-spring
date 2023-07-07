@@ -1,87 +1,66 @@
-package com.example.restaurantapi.controller;
+package com.example.restaurantapi.controller.employee;
 
+import com.example.restaurantapi.dao.response.ResponseOk;
 import com.example.restaurantapi.model.Waiter;
-import com.example.restaurantapi.repository.WaiterRepository;
-import com.example.restaurantapi.services.AttributeCheckerService;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.HttpStatus;
+
+import com.example.restaurantapi.services.employee.implementation.WaiterService;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
 public class WaiterController {
 
-    private final WaiterRepository repository;
-    private final AttributeCheckerService attributeCheckerService;
+    private final WaiterService waiterService;
 
-    WaiterController(AttributeCheckerService attributeCheckerService,
-                     WaiterRepository repository) {
-        this.attributeCheckerService = attributeCheckerService;
-        this.repository = repository;
+    public WaiterController(WaiterService waiterService) {
+        this.waiterService = waiterService;
     }
+
 
     @GetMapping("/waiters")
     List<Waiter> allWaiter() {
-        List<Waiter> waiterList = repository.findAll();
-        if (waiterList.size() < 1) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "There are no waiters to show");
-        }
-        return waiterList;
+        return waiterService.getAllWaiters();
     }
 
-    @GetMapping("/waiter/{idEmployee}")
-    String findId(@PathVariable String idEmployee) {
-        Waiter waiter = repository.findByIdEmployee(idEmployee);
-        return (waiter == null) ? "404" : waiter.get_id();
+    @GetMapping("/waiter/get/{idEmployee}")
+    Waiter findId(@PathVariable String idEmployee) {
+        return waiterService.findWaiterByIdEmployee(idEmployee);
     }
 
-    @PostMapping("/waiter")
-    Waiter newWaiter(@RequestBody Waiter waiter) {
-        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(waiter);
-        if(messageResponseFromNullTest != null){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, messageResponseFromNullTest);
-        }
-        return repository.save(waiter);
+    @GetMapping("/waiters/available")
+    List<Waiter> availableWaiters() {
+        return waiterService.getAvailableWaiters();
     }
 
-    @PutMapping("/waiter/{idEmployee}")
-    Waiter replaceWaiter(@RequestBody Waiter newWaiter, @PathVariable String idEmployee) {
-        String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newWaiter);
-        if(messageResponseFromNullTest != null){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, messageResponseFromNullTest);
-        }
-        Waiter oldWaiter = repository.findByIdEmployee(idEmployee);
-        if(oldWaiter == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Waiter Not Found");
-        }
-        String _id = oldWaiter.get_id();
-        return repository.findById(_id)
-                .map(waiter -> {
-                    waiter.setName(newWaiter.getName());
-                    return repository.save(waiter);
-                })
-                .orElseGet(() -> repository.save(newWaiter));
+    @PostMapping("/waiter/new")
+    ResponseEntity<ResponseOk> newWaiter(@RequestBody Waiter waiter) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( waiterService.saveWaiter(waiter) )
+                        .build());
     }
 
-    @DeleteMapping("/waiter/{idEmployee}")
-    ResponseEntity deleteWaiter(@PathVariable String idEmployee) {
-        Waiter waiter = repository.findByIdEmployee(idEmployee);
-        if(waiter == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Waiter Not Found");
-        }
-        String _id = waiter.get_id();
-        repository.deleteById(_id);
-        return new ResponseEntity<>(
-                waiter.getIdEmployee() + " was successfully deleted.",
-                HttpStatus.OK);
+    @PutMapping("/waiter/update/{idEmployee}")
+    ResponseEntity<ResponseOk> replaceWaiter(@RequestBody Waiter newWaiter) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( waiterService.updateWaiter(newWaiter) )
+                        .build());
+    }
+
+    @DeleteMapping("/waiter/delete/{idEmployee}")
+    ResponseEntity<ResponseOk> deleteWaiter(@PathVariable String idEmployee) {
+        return ResponseEntity.ok(
+                ResponseOk
+                        .builder()
+                        .response( waiterService.deleteWaiter(idEmployee) )
+                        .build());
     }
 }

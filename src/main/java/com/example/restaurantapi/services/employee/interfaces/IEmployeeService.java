@@ -1,5 +1,7 @@
 package com.example.restaurantapi.services.employee.interfaces;
 
-public interface ICheckEmployeeService {
+import com.example.restaurantapi.model.Employee;
+
+public interface IEmployeeService {
     String findEmployeeJob(String idEmployee);
 }

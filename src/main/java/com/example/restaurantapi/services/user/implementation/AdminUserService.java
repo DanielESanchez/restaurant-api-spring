@@ -18,13 +18,10 @@ public class AdminUserService implements IAdminUserService {
     private GetUserRoleService getUserRoleService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationService authenticationService;
-    private UserRepository userRepository;
 
     AdminUserService(GetUserRoleService getUserRoleService,
                      PasswordEncoder passwordEncoder,
-                     AuthenticationService authenticationService,
-                     UserRepository userRepository){
-        this.userRepository = userRepository;
+                     AuthenticationService authenticationService){
         this.getUserRoleService = getUserRoleService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
@@ -37,8 +34,10 @@ public class AdminUserService implements IAdminUserService {
         roles.add(getUserRoleService.getCashierRole());
         roles.add(getUserRoleService.getWaiterRole());
         roles.add(getUserRoleService.getChefRole());
+        user.setFirstName("ADMIN");
+        user.setFirstName("ADMIN");
         user.setUserRoles(roles);
-        user.setCreatedAt(new Date().getTime());
+        user.setCreatedAt(new Date().toString());
         user.setAccountNonExpired(true);
         user.setEnabled(true);
         user.setAccountNonLocked(true);

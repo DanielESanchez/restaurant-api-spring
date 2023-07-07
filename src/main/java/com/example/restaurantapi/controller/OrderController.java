@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Order;
 import com.example.restaurantapi.repository.OrderRepository;
-import com.example.restaurantapi.services.implementation.AttributeCheckerService;
+import com.example.restaurantapi.services.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
 public class OrderController {
@@ -34,13 +35,13 @@ public class OrderController {
         return orderList;
     }
 
-    @GetMapping("/order/{orderNumber}")
+    @GetMapping("/order/get/{orderNumber}")
     String findId(@PathVariable Long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
         return (order == null) ? "404" : order.get_id();
     }
 
-    @PostMapping("/order")
+    @PostMapping("/order/new")
     ResponseEntity newOrder(@RequestBody Order order) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(order);
         if(messageResponseFromNullTest != null){
@@ -53,9 +54,9 @@ public class OrderController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("/order/{orderNumber}")
-    ResponseEntity replaceOrder(@RequestBody Order newOrder, @PathVariable Long orderNumber) {
-        Order oldOrder = repository.findItemByProductId(orderNumber);
+    @PutMapping("/order/update/{orderNumber}")
+    ResponseEntity replaceOrder(@RequestBody Order newOrder) {
+        Order oldOrder = repository.findItemByProductId(newOrder.getOrderNumber());
         if(oldOrder == null) return null;
         String _id = oldOrder.get_id();
         return repository.findById(_id)
@@ -78,7 +79,7 @@ public class OrderController {
                 });
     }
 
-    @DeleteMapping("/order/{orderNumber}")
+    @DeleteMapping("/order/delete/{orderNumber}")
     ResponseEntity deleteOrder(@PathVariable Long orderNumber) {
         Order order = repository.findItemByProductId(orderNumber);
         if(order == null) {

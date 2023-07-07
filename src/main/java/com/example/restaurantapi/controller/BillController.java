@@ -2,7 +2,7 @@ package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.Bill;
 import com.example.restaurantapi.repository.BillRepository;
-import com.example.restaurantapi.services.implementation.AttributeCheckerService;
+import com.example.restaurantapi.services.AttributeCheckerService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
 public class BillController {
@@ -32,13 +33,13 @@ public class BillController {
         return repository.findAll();
     }
 
-    @GetMapping("/bill/{idBill}")
+    @GetMapping("/bill/get/{idBill}")
     String findId(@PathVariable String idBill) {
         Bill bill = repository.findBillByIdBill(idBill);
         return (bill == null) ? "404" : bill.get_id();
     }
 
-    @PostMapping("/bill")
+    @PostMapping("/bill/new")
     ResponseEntity newBill(@RequestBody Bill bill) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(bill);
         if(messageResponseFromNullTest != null){
@@ -51,14 +52,14 @@ public class BillController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("/bill/{idBill}")
-    ResponseEntity replaceBill(@RequestBody Bill newBill, @PathVariable String idBill) {
+    @PutMapping("/bill/update/{idBill}")
+    ResponseEntity replaceBill(@RequestBody Bill newBill) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newBill);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
-        Bill oldBill = repository.findBillByIdBill(idBill);
+        Bill oldBill = repository.findBillByIdBill(newBill.getIdBill());
         if(oldBill == null) return null;
         String _id = oldBill.get_id();
         return repository.findById(_id)
@@ -88,7 +89,7 @@ public class BillController {
                 });
     }
 
-    @DeleteMapping("/bill/{idBill}")
+    @DeleteMapping("/bill/delete/{idBill}")
     ResponseEntity deleteBill(@PathVariable String idBill) {
         Bill bill = repository.findBillByIdBill(idBill);
         if(bill == null) {

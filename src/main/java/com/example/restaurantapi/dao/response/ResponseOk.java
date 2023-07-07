@@ -1,2 +1,14 @@
-package com.example.restaurantapi.dao.response;public class ResponseOk {
+package com.example.restaurantapi.dao.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ResponseOk {
+    String response;
 }

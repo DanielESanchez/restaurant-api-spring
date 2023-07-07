@@ -7,7 +7,7 @@ public interface IChangeDataUserService {
     String lockAccount(String username);
     String unlockAccount(String username);
     String setExpiredAccount(String username);
-    String SetNonExpiredAccount(String username);
+    String setNonExpiredAccount(String username);
     String enableAccount(String username);
     String disableAccount(String username);
     String setCredentialsExpiredAccount(String username);

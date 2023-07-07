@@ -25,13 +25,21 @@ public class User implements UserDetails {
     @Setter
     private String password;
 
-    @Getter
     @Setter
-    private Long lastLogin;
+    @Getter
+    private String firstName;
+
+    @Setter
+    @Getter
+    private String lastName;
 
     @Getter
     @Setter
-    private Long createdAt;
+    private String lastLogin;
+
+    @Getter
+    @Setter
+    private String createdAt;
 
     @Getter
     @Setter

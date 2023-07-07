@@ -1,4 +1,4 @@
-package com.example.restaurantapi.services.implementation;
+package com.example.restaurantapi.services;
 
 import com.example.restaurantapi.services.IAttributeCheckerService;
 import org.springframework.stereotype.Service;

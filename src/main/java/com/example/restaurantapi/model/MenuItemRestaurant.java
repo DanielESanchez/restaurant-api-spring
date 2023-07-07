@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
 @Document("menu")
 public class MenuItemRestaurant {
@@ -23,6 +24,10 @@ public class MenuItemRestaurant {
     @Setter
     @Indexed(unique = true)
     private String name;
+
+    @Getter
+    @Setter
+    private String image;
 
     @Getter
     @Setter
