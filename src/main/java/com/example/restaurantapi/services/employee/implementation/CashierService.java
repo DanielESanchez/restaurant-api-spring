@@ -1,6 +1,6 @@
 package com.example.restaurantapi.services.employee.implementation;
 
-import com.example.restaurantapi.model.Cashier;
+import com.example.restaurantapi.model.person.Cashier;
 import com.example.restaurantapi.repository.CashierRepository;
 import com.example.restaurantapi.services.AttributeCheckerService;
 import com.example.restaurantapi.services.employee.interfaces.ICashierService;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,6 +59,8 @@ public class CashierService implements ICashierService {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
+        cashier.setIsEmployee(true);
+        cashier.setIsWorking(false);
         cashierRepository.save(cashier);
         return cashier.getIdEmployee() + " was successfully added.";
     }

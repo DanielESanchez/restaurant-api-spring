@@ -1,8 +1,8 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
-import com.example.restaurantapi.model.EmployeeUser;
-import com.example.restaurantapi.model.UserRole;
+import com.example.restaurantapi.model.user.EmployeeUser;
+import com.example.restaurantapi.model.user.UserRole;
 import com.example.restaurantapi.services.employee.implementation.EmployeeService;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.interfaces.IChefUserService;

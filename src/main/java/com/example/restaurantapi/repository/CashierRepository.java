@@ -1,6 +1,6 @@
 package com.example.restaurantapi.repository;
 
-import com.example.restaurantapi.model.Cashier;
+import com.example.restaurantapi.model.person.Cashier;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

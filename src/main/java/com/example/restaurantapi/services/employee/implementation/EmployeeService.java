@@ -1,8 +1,8 @@
 package com.example.restaurantapi.services.employee.implementation;
 
-import com.example.restaurantapi.model.Cashier;
-import com.example.restaurantapi.model.Chef;
-import com.example.restaurantapi.model.Waiter;
+import com.example.restaurantapi.model.person.Cashier;
+import com.example.restaurantapi.model.person.Chef;
+import com.example.restaurantapi.model.person.Waiter;
 import com.example.restaurantapi.repository.CashierRepository;
 import com.example.restaurantapi.repository.ChefRepository;
 import com.example.restaurantapi.repository.WaiterRepository;

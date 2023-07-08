@@ -1,6 +1,6 @@
 package com.example.restaurantapi.controller.role;
 
-import com.example.restaurantapi.model.Role;
+import com.example.restaurantapi.model.user.Role;
 import com.example.restaurantapi.repository.RoleRepository;
 
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;

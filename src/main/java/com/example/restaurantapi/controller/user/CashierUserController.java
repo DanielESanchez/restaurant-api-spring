@@ -3,7 +3,7 @@ package com.example.restaurantapi.controller.user;
 import com.example.restaurantapi.dao.request.ChangePasswordRequest;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.dao.response.ResponseOk;
-import com.example.restaurantapi.model.EmployeeUser;
+import com.example.restaurantapi.model.user.EmployeeUser;
 import com.example.restaurantapi.services.user.implementation.CashierUserService;
 import com.example.restaurantapi.services.user.implementation.ChangeDataUserService;
 

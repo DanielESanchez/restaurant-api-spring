@@ -1,11 +1,11 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.person;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("employees")
-public class Cashier extends Employee {
+public class Chef extends Employee{
 
-    public Cashier(){
+    public Chef(){
         super();
     }
 

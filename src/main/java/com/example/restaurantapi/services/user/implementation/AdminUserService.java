@@ -1,9 +1,8 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
-import com.example.restaurantapi.model.User;
-import com.example.restaurantapi.model.UserRole;
-import com.example.restaurantapi.repository.UserRepository;
+import com.example.restaurantapi.model.user.User;
+import com.example.restaurantapi.model.user.UserRole;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.interfaces.IAdminUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;

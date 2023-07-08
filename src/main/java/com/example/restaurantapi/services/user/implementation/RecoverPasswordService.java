@@ -1,7 +1,7 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.model.EmailDetails;
-import com.example.restaurantapi.model.User;
+import com.example.restaurantapi.model.user.User;
 import com.example.restaurantapi.repository.UserRepository;
 import com.example.restaurantapi.services.email.implementation.EmailService;
 import com.example.restaurantapi.services.user.interfaces.IRecoverPasswordService;

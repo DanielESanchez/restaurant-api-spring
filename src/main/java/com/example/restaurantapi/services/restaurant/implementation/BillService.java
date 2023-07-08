@@ -1,68 +1,71 @@
-package com.example.restaurantapi.controller;
+package com.example.restaurantapi.services.restaurant.implementation;
 
-import com.example.restaurantapi.model.Bill;
+import com.example.restaurantapi.model.restaurant.Bill;
 import com.example.restaurantapi.repository.BillRepository;
 import com.example.restaurantapi.services.AttributeCheckerService;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import com.example.restaurantapi.services.restaurant.interfaces.IBillService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin
-@RestController
-@EnableMongoRepositories
-public class BillController {
-    private final BillRepository repository;
+@Service
+public class BillService implements IBillService {
+
+    private final BillRepository billRepository;
     private final AttributeCheckerService attributeCheckerService;
 
-    BillController(BillRepository repository, AttributeCheckerService attributeCheckerService) {
-        this.repository = repository;
+    public BillService(BillRepository billRepository, AttributeCheckerService attributeCheckerService) {
+        this.billRepository = billRepository;
         this.attributeCheckerService = attributeCheckerService;
     }
 
-    @GetMapping("/bills")
-    List<Bill> allBill() {
-        List<Bill> billList = repository.findAll();
+    @Override
+    public List<Bill> allBill() {
+        List<Bill> billList = billRepository.findAll();
         if (billList.size() < 1) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There are no bills to show.");
         }
-        return repository.findAll();
+        return billRepository.findAll();
     }
 
-    @GetMapping("/bill/get/{idBill}")
-    String findId(@PathVariable String idBill) {
-        Bill bill = repository.findBillByIdBill(idBill);
-        return (bill == null) ? "404" : bill.get_id();
+    @Override
+    public Bill findById(String idBill) {
+        Bill bill = billRepository.findBillByIdBill(idBill);
+        if(bill == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Bill not found.");
+        }
+        return bill;
     }
 
-    @PostMapping("/bill/new")
-    ResponseEntity newBill(@RequestBody Bill bill) {
+    @Override
+    public String newBill(Bill bill) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(bill);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
-        repository.save(bill);
-        return new ResponseEntity<>(
-                bill.getIdBill() + " was successfully saved.",
-                HttpStatus.OK);
+        billRepository.save(bill);
+        return bill.getIdBill() + " was successfully saved.";
     }
 
-    @PutMapping("/bill/update/{idBill}")
-    ResponseEntity replaceBill(@RequestBody Bill newBill) {
+    @Override
+    public String updateBill(Bill newBill) {
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(newBill);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
-        Bill oldBill = repository.findBillByIdBill(newBill.getIdBill());
-        if(oldBill == null) return null;
+        Bill oldBill = billRepository.findBillByIdBill(newBill.getIdBill());
+        if(oldBill == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Bill to update not found.");
+        }
         String _id = oldBill.get_id();
-        return repository.findById(_id)
+        return billRepository.findById(_id)
                 .map(bill -> {
                     bill.setIdBill(newBill.getIdBill());
                     bill.setDateBill(newBill.getDateBill());
@@ -76,31 +79,24 @@ public class BillController {
                     bill.setDiscountTotal(newBill.getDiscountTotal());
                     bill.setTotal(newBill.getTotal());
                     bill.setItems(newBill.getItems());
-                    repository.save(bill);
-                    return new ResponseEntity<>(
-                            bill.getIdBill() + " was successfully updated.",
-                            HttpStatus.OK);
+                    billRepository.save(bill);
+                    return bill.getIdBill() + " was successfully updated.";
                 })
                 .orElseGet(() -> {
-                    repository.save(newBill);
-                    return new ResponseEntity<>(
-                            newBill.getIdBill() + " was saved.",
-                            HttpStatus.OK);
+                    billRepository.save(newBill);
+                    return newBill.getIdBill() + " was saved.";
                 });
     }
 
-    @DeleteMapping("/bill/delete/{idBill}")
-    ResponseEntity deleteBill(@PathVariable String idBill) {
-        Bill bill = repository.findBillByIdBill(idBill);
+    @Override
+    public String deleteBill(String idBill) {
+        Bill bill = billRepository.findBillByIdBill(idBill);
         if(bill == null) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Menu Item Not Found");
         }
         String _id = bill.get_id();
-        repository.deleteById(_id);
-        return new ResponseEntity<>(
-                bill.getIdBill() + " was successfully deleted.",
-                HttpStatus.OK);
+        billRepository.deleteById(_id);
+        return bill.getIdBill() + " was successfully deleted.";
     }
-
 }

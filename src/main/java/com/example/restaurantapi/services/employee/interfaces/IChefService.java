@@ -1,6 +1,6 @@
 package com.example.restaurantapi.services.employee.interfaces;
 
-import com.example.restaurantapi.model.Chef;
+import com.example.restaurantapi.model.person.Chef;
 
 import java.util.List;
 

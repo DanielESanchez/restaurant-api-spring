@@ -1,5 +1,7 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.restaurant;
 
+import com.example.restaurantapi.model.person.Cashier;
+import com.example.restaurantapi.model.person.Customer;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

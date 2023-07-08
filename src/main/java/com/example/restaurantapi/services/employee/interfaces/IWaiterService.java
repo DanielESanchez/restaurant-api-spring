@@ -1,6 +1,6 @@
 package com.example.restaurantapi.services.employee.interfaces;
 
-import com.example.restaurantapi.model.Waiter;
+import com.example.restaurantapi.model.person.Waiter;
 
 import java.util.List;
 

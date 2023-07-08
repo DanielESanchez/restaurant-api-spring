@@ -1,14 +1,13 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.dao.request.ChangePasswordRequest;
-import com.example.restaurantapi.model.User;
+import com.example.restaurantapi.model.user.User;
 import com.example.restaurantapi.repository.UserRepository;
 import com.example.restaurantapi.services.security.implementation.JwtService;
 import com.example.restaurantapi.services.user.interfaces.IChangeDataUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service

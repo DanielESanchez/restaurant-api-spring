@@ -1,16 +1,16 @@
 package com.example.restaurantapi.controller.employee;
 
 import com.example.restaurantapi.dao.response.ResponseOk;
-import com.example.restaurantapi.model.Waiter;
+import com.example.restaurantapi.model.person.Waiter;
 
 import com.example.restaurantapi.services.employee.implementation.WaiterService;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @EnableMongoRepositories
 public class WaiterController {

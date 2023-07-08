@@ -1,9 +1,8 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.user;
 
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
 public class UserRole implements GrantedAuthority {

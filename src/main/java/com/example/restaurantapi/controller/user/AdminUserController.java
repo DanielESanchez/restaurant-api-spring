@@ -4,7 +4,7 @@ import com.example.restaurantapi.dao.request.ChangeDataUserRequest;
 import com.example.restaurantapi.dao.request.ChangePasswordRequest;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.dao.response.ResponseOk;
-import com.example.restaurantapi.model.User;
+import com.example.restaurantapi.model.user.User;
 import com.example.restaurantapi.services.user.implementation.AdminUserService;
 
 import com.example.restaurantapi.services.user.implementation.ChangeDataUserService;

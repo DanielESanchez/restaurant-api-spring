@@ -1,7 +1,7 @@
 package com.example.restaurantapi.repository;
 
-import com.example.restaurantapi.model.EmployeeUser;
-import com.example.restaurantapi.model.User;
+import com.example.restaurantapi.model.user.EmployeeUser;
+import com.example.restaurantapi.model.user.User;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

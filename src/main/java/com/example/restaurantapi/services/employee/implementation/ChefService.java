@@ -1,6 +1,6 @@
 package com.example.restaurantapi.services.employee.implementation;
 
-import com.example.restaurantapi.model.Chef;
+import com.example.restaurantapi.model.person.Chef;
 import com.example.restaurantapi.repository.ChefRepository;
 import com.example.restaurantapi.services.AttributeCheckerService;
 import com.example.restaurantapi.services.employee.interfaces.IChefService;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -59,6 +60,8 @@ public class ChefService implements IChefService {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
+        chef.setIsEmployee(true);
+        chef.setIsWorking(false);
         chefRepository.save(chef);
         return chef.getIdEmployee() + " was successfully added.";
     }

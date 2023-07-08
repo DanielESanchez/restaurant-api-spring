@@ -1,6 +1,6 @@
 package com.example.restaurantapi.services.employee.implementation;
 
-import com.example.restaurantapi.model.Waiter;
+import com.example.restaurantapi.model.person.Waiter;
 import com.example.restaurantapi.repository.WaiterRepository;
 import com.example.restaurantapi.services.AttributeCheckerService;
 import com.example.restaurantapi.services.employee.interfaces.IWaiterService;
@@ -59,6 +59,8 @@ public class WaiterService implements IWaiterService {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, messageResponseFromNullTest);
         }
+        waiter.setIsEmployee(true);
+        waiter.setIsWorking(false);
         waiterRepository.save(waiter);
         return waiter.getIdEmployee() + " was successfully added.";
     }

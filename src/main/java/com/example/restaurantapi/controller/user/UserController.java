@@ -4,8 +4,8 @@ import com.example.restaurantapi.dao.request.LoginRequest;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.dao.response.ResponseOk;
 import com.example.restaurantapi.model.EmailDetails;
-import com.example.restaurantapi.model.User;
-import com.example.restaurantapi.model.UserRole;
+import com.example.restaurantapi.model.user.User;
+import com.example.restaurantapi.model.user.UserRole;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.implementation.GetUserRoleService;
 import com.example.restaurantapi.services.user.implementation.RecoverPasswordService;
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    ResponseEntity<JwtAuthenticationResponse> loginAdmin(@RequestBody LoginRequest loginRequest) {
+    ResponseEntity<JwtAuthenticationResponse> loginUser(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(authenticationService.login(loginRequest));
     }
 

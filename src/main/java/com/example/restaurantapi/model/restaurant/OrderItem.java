@@ -1,5 +1,6 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.restaurant;
 
+import com.example.restaurantapi.model.person.Chef;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.person;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

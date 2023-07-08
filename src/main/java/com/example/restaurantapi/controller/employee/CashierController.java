@@ -1,7 +1,7 @@
 package com.example.restaurantapi.controller.employee;
 
 import com.example.restaurantapi.dao.response.ResponseOk;
-import com.example.restaurantapi.model.Cashier;
+import com.example.restaurantapi.model.person.Cashier;
 import com.example.restaurantapi.services.employee.implementation.CashierService;
 
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @EnableMongoRepositories
 public class CashierController {

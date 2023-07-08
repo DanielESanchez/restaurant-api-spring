@@ -1,7 +1,5 @@
 package com.example.restaurantapi.dao.request;
 
-import com.example.restaurantapi.model.Employee;
-import com.example.restaurantapi.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,14 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.restaurant;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Person {
+@Document("menu")
+public class MenuItemRestaurant {
+
     @Id
     @Getter
     @Setter
@@ -14,42 +17,35 @@ public class Person {
     @Getter
     @Setter
     @Indexed(unique = true)
-    private String idPerson;
-
-    @Getter
-    @Setter
-    private Integer age;
-
-    @Getter
-    @Setter
-    private String name;
-
-    @Getter
-    @Setter
-    private String lastName;
+    private String productId;
 
     @Getter
     @Setter
     @Indexed(unique = true)
-    private String email;
+    private String name;
 
     @Getter
     @Setter
-    private String phone;
+    private String image;
 
     @Getter
     @Setter
-    private String address;
+    private Float price;
 
     @Getter
     @Setter
-    private String registered;
+    private String consumable;
 
     @Getter
     @Setter
-    public Boolean isEmployee;
+    private String cuisineName;
 
-    public String getFullName() {
-        return name + " " + lastName;
-    }
+    @Getter
+    @Setter
+    private String categoryName;
+
+    @Getter
+    @Setter
+    private String description;
+
 }

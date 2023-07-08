@@ -1,7 +1,7 @@
 package com.example.restaurantapi.services.user.implementation;
 
-import com.example.restaurantapi.model.Role;
-import com.example.restaurantapi.model.UserRole;
+import com.example.restaurantapi.model.user.Role;
+import com.example.restaurantapi.model.user.UserRole;
 import com.example.restaurantapi.repository.RoleRepository;
 import com.example.restaurantapi.services.user.interfaces.IGetUserRoleService;
 import org.springframework.stereotype.Service;

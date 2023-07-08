@@ -1,9 +1,8 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.person;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Employee extends Person {
     @Getter
