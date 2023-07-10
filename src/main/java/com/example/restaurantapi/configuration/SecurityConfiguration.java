@@ -29,40 +29,40 @@ import java.security.SecureRandom;
 public class SecurityConfiguration {
 
     public static final String[] USER_ENDPOINTS_WHITELIST = {
-            "/order/get/**",
-            "/order/update/**",
-            "/order/new/**",
-            "/user/get/**"
+            "/api/order/get/**",
+            "/api/order/update/**",
+            "/api/order/new/**",
+            "/api/user/get/**"
     };
     public static final String[] CHEF_ENDPOINTS_WHITELIST = {
-            "/waiter/user/password/**"
+            "/api/waiter/user/password/**"
     };
     public static final String[] WAITER_ENDPOINTS_WHITELIST = {
-            "/waiter/user/password/**",
-            "/table/update/**"
+            "/api/waiter/user/password/**",
+            "/api/table/update/**"
     };
     public static final String[] CASHIER_ENDPOINTS_WHITELIST = {
-            "/bill/get/**",
-            "/bill/new/**",
-            "/cashier/user/password"
+            "/api/bill/get/**",
+            "/api/bill/new/**",
+            "/api/cashier/user/password"
     };
 
     public static final String[] ADMIN_ENDPOINTS_WHITELIST = {
-            "/chef/**",
-            "/chefs/**",
-            "/cashier/**",
-            "/cashiers/**",
-            "/waiter/**",
-            "/waiters/**",
-            "/role/**",
-            "/admin/**",
-            "/bill/**",
-            "/bills/**",
-            "/table/**",
-            "/menu/**",
-            "/order/**",
-            "/orders/**",
-            "/file/**"
+            "/api/chef/**",
+            "/api/chefs/**",
+            "/api/cashier/**",
+            "/api/cashiers/**",
+            "/api/waiter/**",
+            "/api/waiters/**",
+            "/api/role/**",
+            "/api/admin/**",
+            "/api/bill/**",
+            "/api/bills/**",
+            "/api/table/**",
+            "/api/menu/**",
+            "/api/order/**",
+            "/api/orders/**",
+            "/api/file/upload/**"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;

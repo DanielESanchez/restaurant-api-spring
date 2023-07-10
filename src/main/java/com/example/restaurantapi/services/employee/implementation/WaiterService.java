@@ -24,7 +24,7 @@ public class WaiterService implements IWaiterService {
 
     @Override
     public List<Waiter> getAllWaiters() {
-        List<Waiter> waiterList = waiterRepository.findAll();
+        List<Waiter> waiterList = waiterRepository.findAllWaiter();
         if (waiterList.size() < 1) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There are no waiters to show");

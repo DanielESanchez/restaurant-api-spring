@@ -12,11 +12,11 @@ public class OrderItem {
 
     @Getter
     @Setter
-    private Boolean isBeingCooked;
+    private Boolean isBeingCooked = false;
 
     @Getter
     @Setter
-    private Chef chefAssigned;
+    private String chefAssigned;
 
     @Getter
     @Setter
@@ -26,7 +26,7 @@ public class OrderItem {
     @Setter
     private Integer quantity;
 
-    public OrderItem(Chef chefAssigned, MenuItemRestaurant menuItem){
+    public OrderItem(String chefAssigned, MenuItemRestaurant menuItem){
         super();
         this.menuItem = menuItem;
         this.chefAssigned = chefAssigned;

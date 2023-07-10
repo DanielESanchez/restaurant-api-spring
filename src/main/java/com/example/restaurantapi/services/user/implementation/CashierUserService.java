@@ -1,8 +1,10 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
+import com.example.restaurantapi.model.person.Cashier;
 import com.example.restaurantapi.model.user.EmployeeUser;
 import com.example.restaurantapi.model.user.UserRole;
+import com.example.restaurantapi.repository.CashierRepository;
 import com.example.restaurantapi.services.employee.implementation.EmployeeService;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.interfaces.ICashierUserService;
@@ -21,12 +23,14 @@ public class CashierUserService implements ICashierUserService {
     private final GetUserRoleService getUserRoleService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
+    private final CashierRepository cashierRepository;
 
-    public CashierUserService(EmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
+    public CashierUserService(EmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService, CashierRepository cashierRepository) {
         this.checkEmployeeService = checkEmployeeService;
         this.getUserRoleService = getUserRoleService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
+        this.cashierRepository = cashierRepository;
     }
 
     @Override
@@ -36,10 +40,13 @@ public class CashierUserService implements ICashierUserService {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Employee not found.");
         }
-        if(!jobFoundForUser.equals("chef")){
+        Cashier cashierEmployee = cashierRepository.findByIdEmployee(employeeUser.getIdEmployee());
+        if(!jobFoundForUser.equals("cashier")){
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN, "The employee is not a cashier.");
         }
+        employeeUser.setFirstName(cashierEmployee.getName());
+        employeeUser.setLastName(cashierEmployee.getLastName());
         Set<UserRole> roles = new HashSet<>();
         roles.add(getUserRoleService.getUserRole());
         roles.add(getUserRoleService.getCashierRole());

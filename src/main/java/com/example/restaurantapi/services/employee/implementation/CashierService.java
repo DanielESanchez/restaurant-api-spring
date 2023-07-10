@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +23,7 @@ public class CashierService implements ICashierService {
 
     @Override
     public List<Cashier> getAllCashiers() {
-        List<Cashier> cashierList = cashierRepository.findAll();
+        List<Cashier> cashierList = cashierRepository.findAllCashiers();
         if (cashierList.size() < 1) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There are no cashiers to show");

@@ -1,8 +1,10 @@
 package com.example.restaurantapi.services.user.implementation;
 
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
+import com.example.restaurantapi.model.person.Chef;
 import com.example.restaurantapi.model.user.EmployeeUser;
 import com.example.restaurantapi.model.user.UserRole;
+import com.example.restaurantapi.repository.ChefRepository;
 import com.example.restaurantapi.services.employee.implementation.EmployeeService;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.interfaces.IChefUserService;
@@ -21,12 +23,14 @@ public class ChefUserService implements IChefUserService {
     private final GetUserRoleService getUserRoleService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
+    private final ChefRepository chefRepository;
 
-    ChefUserService(EmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService){
+    ChefUserService(EmployeeService checkEmployeeService, GetUserRoleService getUserRoleService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService, ChefRepository chefRepository){
         this.checkEmployeeService = checkEmployeeService;
         this.getUserRoleService = getUserRoleService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
+        this.chefRepository = chefRepository;
     }
     @Override
     public JwtAuthenticationResponse saveNewChefUser(EmployeeUser employeeUser) {
@@ -39,6 +43,9 @@ public class ChefUserService implements IChefUserService {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN, "The employee is not a chef.");
         }
+        Chef chefEmployee = chefRepository.findByIdEmployee(employeeUser.getIdEmployee());
+        employeeUser.setFirstName(chefEmployee.getName());
+        employeeUser.setLastName(chefEmployee.getLastName());
         Set<UserRole> roles = new HashSet<>();
         roles.add(getUserRoleService.getUserRole());
         roles.add(getUserRoleService.getChefRole());

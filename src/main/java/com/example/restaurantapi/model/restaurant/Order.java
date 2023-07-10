@@ -4,6 +4,7 @@ import com.example.restaurantapi.model.person.Waiter;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 @Document("orders")
 public class Order {
+    @Transient
+    public static final String SEQUENCE_NAME = "order_sequence";
 
     @Id
     @Getter
@@ -27,7 +30,7 @@ public class Order {
 
     @Getter
     @Setter
-    private Waiter waiterAssigned;
+    private String waiterAssigned;
 
     @Getter
     @Setter
@@ -35,6 +38,10 @@ public class Order {
 
     @Getter
     @Setter
-    private Table table;
+    private Long table;
+
+    @Getter
+    @Setter
+    private String username;
 
 }

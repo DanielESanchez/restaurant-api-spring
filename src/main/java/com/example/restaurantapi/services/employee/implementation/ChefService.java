@@ -25,7 +25,7 @@ public class ChefService implements IChefService {
 
     @Override
     public List<Chef> getAllChefs() {
-        List<Chef> chefList = chefRepository.findAll();
+        List<Chef> chefList = chefRepository.findAllChefs();
         if (chefList.size() < 1) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "There are no chefs to show");

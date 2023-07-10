@@ -4,37 +4,40 @@ import com.example.restaurantapi.dao.request.LoginRequest;
 import com.example.restaurantapi.dao.response.JwtAuthenticationResponse;
 import com.example.restaurantapi.dao.response.ResponseOk;
 import com.example.restaurantapi.model.EmailDetails;
+import com.example.restaurantapi.model.user.EmployeeUser;
 import com.example.restaurantapi.model.user.User;
 import com.example.restaurantapi.model.user.UserRole;
+import com.example.restaurantapi.repository.UserRepository;
 import com.example.restaurantapi.services.security.implementation.AuthenticationService;
 import com.example.restaurantapi.services.user.implementation.GetUserRoleService;
 import com.example.restaurantapi.services.user.implementation.RecoverPasswordService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final GetUserRoleService getUserRoleService;
     private final AuthenticationService authenticationService;
     private final RecoverPasswordService recoverPassword;
+    private final UserRepository userRepository;
 
-    UserController(GetUserRoleService getUserRoleService, AuthenticationService authenticationService, PasswordEncoder passwordEncoder, RecoverPasswordService recoverPassword){
+    UserController(GetUserRoleService getUserRoleService, AuthenticationService authenticationService, PasswordEncoder passwordEncoder, RecoverPasswordService recoverPassword, UserRepository userRepository){
         this.getUserRoleService = getUserRoleService;
         this.authenticationService = authenticationService;
         this.passwordEncoder = passwordEncoder;
         this.recoverPassword = recoverPassword;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/user/new")
@@ -59,4 +62,10 @@ public class UserController {
                 .response( recoverPassword.recoverPassword(emailDetails) )
                 .build());
     }
+
+    @GetMapping("/users")
+    List<User> allUser(){
+        return userRepository.findAll();
+    }
+
 }

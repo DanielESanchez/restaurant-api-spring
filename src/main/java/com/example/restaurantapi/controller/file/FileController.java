@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("file")
+@RequestMapping("api/file")
 public class FileController {
 
     private final FileManagerService fileService;

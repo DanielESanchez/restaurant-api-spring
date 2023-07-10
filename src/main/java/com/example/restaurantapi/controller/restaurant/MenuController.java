@@ -13,6 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class MenuController {
 
     private final MenuService menuService;

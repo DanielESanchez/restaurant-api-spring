@@ -6,10 +6,12 @@ import com.example.restaurantapi.repository.RoleRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class RoleController {
     private final RoleRepository roleRepository;
 

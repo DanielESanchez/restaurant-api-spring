@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class AdminUserController {
 
     private final AdminUserService adminUserService;
@@ -26,12 +27,12 @@ public class AdminUserController {
         this.adminUserService = adminUserService;
     }
 
-    @PostMapping("/admin/new")
+    @PostMapping("/admin/user/new")
     ResponseEntity<JwtAuthenticationResponse> saveAdmin(@RequestBody User user) {
         return ResponseEntity.ok(adminUserService.saveNewAdmin(user));
     }
 
-    @PutMapping("/admin/password")
+    @PutMapping("/admin/user/password")
     ResponseEntity<ResponseOk> changePasswordAdmin(@RequestBody ChangePasswordRequest changePasswordRequest, @RequestHeader("Authorization") String header) {
         return ResponseEntity.ok(
                 ResponseOk

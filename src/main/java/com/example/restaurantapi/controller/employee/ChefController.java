@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class ChefController {
 
     private final ChefService chefService;
@@ -26,7 +27,7 @@ public class ChefController {
         return chefService.getAllChefs();
     }
 
-    @GetMapping("/chef/{idEmployee}")
+    @GetMapping("/chef/get/{idEmployee}")
     Chef findId(@PathVariable String idEmployee) {
         return chefService.findChefByIdEmployee(idEmployee);
     }
@@ -54,7 +55,7 @@ public class ChefController {
                         .build());
     }
 
-    @DeleteMapping("/chef/{idEmployee}")
+    @DeleteMapping("/chef/delete/{idEmployee}")
     ResponseEntity<ResponseOk> deleteChef(@PathVariable String idEmployee) {
         return ResponseEntity.ok(
                 ResponseOk

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class WaiterUserController {
 
     private final ChangeDataUserService changeDataUserService;

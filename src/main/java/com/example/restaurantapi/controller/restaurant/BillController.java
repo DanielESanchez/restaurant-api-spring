@@ -13,6 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class BillController {
 
     private final BillService billService;

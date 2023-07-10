@@ -9,7 +9,7 @@ import java.util.List;
 public interface IOrderService {
     List<Order> allOrder();
     Order findId(Long orderNumber);
-    String newOrder(Order order);
+    String newOrder(Order order, String header);
     String replaceOrder(@RequestBody Order newOrder);
     String deleteOrder(@PathVariable Long orderNumber);
 }

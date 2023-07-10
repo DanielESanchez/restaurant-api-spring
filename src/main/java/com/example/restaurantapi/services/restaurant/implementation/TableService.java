@@ -34,6 +34,7 @@ public class TableService implements ITableService {
     @Override
     public Table findId(Long tableNumber) {
         Table table = tableRepository.findByTableNumber(tableNumber);
+        System.out.println(table.getTableNumber());
         if(table == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Table not found.");

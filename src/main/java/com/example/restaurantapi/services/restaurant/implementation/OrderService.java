@@ -1,9 +1,12 @@
 package com.example.restaurantapi.services.restaurant.implementation;
 
 import com.example.restaurantapi.model.restaurant.Order;
+import com.example.restaurantapi.model.user.User;
 import com.example.restaurantapi.repository.OrderRepository;
+import com.example.restaurantapi.repository.UserRepository;
 import com.example.restaurantapi.services.AttributeCheckerService;
 import com.example.restaurantapi.services.restaurant.interfaces.IOrderService;
+import com.example.restaurantapi.services.security.implementation.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,10 +17,14 @@ import java.util.List;
 public class OrderService implements IOrderService {
     private final AttributeCheckerService attributeCheckerService;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
-    public OrderService(AttributeCheckerService attributeCheckerService, OrderRepository orderRepository) {
+    public OrderService(AttributeCheckerService attributeCheckerService, OrderRepository orderRepository, UserRepository userRepository, JwtService jwtService) {
         this.attributeCheckerService = attributeCheckerService;
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -41,7 +48,15 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public String newOrder(Order order) {
+    public String newOrder(Order order, String header) {
+        final String jwt = header.substring(7);
+        final String username = jwtService.extractUsername(jwt);
+        User user = userRepository.findUserByUsername(username);
+        if(user ==  null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User not found");
+        }
+        order.setUsername(username);
         String messageResponseFromNullTest = attributeCheckerService.checkNullsInObject(order);
         if(messageResponseFromNullTest != null){
             throw new ResponseStatusException(

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class WaiterController {
 
     private final WaiterService waiterService;
@@ -46,7 +46,7 @@ public class WaiterController {
                         .build());
     }
 
-    @PutMapping("/waiter/update/{idEmployee}")
+    @PutMapping("/waiter/update")
     ResponseEntity<ResponseOk> replaceWaiter(@RequestBody Waiter newWaiter) {
         return ResponseEntity.ok(
                 ResponseOk

@@ -2,6 +2,7 @@ package com.example.restaurantapi.controller.restaurant;
 
 import com.example.restaurantapi.dao.response.ResponseOk;
 import com.example.restaurantapi.model.restaurant.Table;
+import com.example.restaurantapi.services.restaurant.implementation.SequenceGeneratorService;
 import com.example.restaurantapi.services.restaurant.implementation.TableService;
 
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -13,12 +14,15 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @EnableMongoRepositories
+@RequestMapping("api")
 public class TableController {
 
     private final TableService tableService;
+    private final SequenceGeneratorService sequenceGeneratorService;
 
-    public TableController(TableService tableService) {
+    public TableController(TableService tableService, SequenceGeneratorService sequenceGeneratorService) {
         this.tableService = tableService;
+        this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
     @GetMapping("/tables")
@@ -28,11 +32,13 @@ public class TableController {
 
     @GetMapping("/table/get/{tableNumber}")
     Table findId(@PathVariable Long tableNumber) {
+        System.out.println(tableNumber);
         return tableService.findId(tableNumber);
     }
 
     @PostMapping("/table/new")
-    ResponseEntity<ResponseOk> newTable(@RequestBody Table table) {
+    ResponseEntity<ResponseOk> newTable() {
+        Table table = Table.builder().tableNumber(sequenceGeneratorService.generateSequence(Table.SEQUENCE_NAME)).isEmpty(true).build();
         return ResponseEntity.ok(
                 ResponseOk
                         .builder()
